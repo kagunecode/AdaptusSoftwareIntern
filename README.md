@@ -43,14 +43,20 @@ how to use it.
 - shared constant: It is used to create any kind of constant that should be used for labels in the
   code that should not be put as strings. If you want to use it in your code, you should call it like
   this:
-  `js shared.CONSTANT_NAME`
+  ```js
+  shared.CONSTANT_NAME;
+  ```
 - resources constant: It is used to represent the other modules that will be called from this specific
   task. If you want to use a specific module in your code, the declaration should be something like:
-  `js const { module_name, \_debug } = resources`
+  ```js
+  const { module_name, \_debug } = resources
+  ```
 - Load function: The purpose of this function is to ONLY load parameters that come in for this
   specific module, such as the arrays and it should not contain any logic. They would be declared
   like
-  `js config.param_1 = input.param_1`
+  ```js
+  config.param_1 = input.param_1;
+  ```
 - Validate function: The purpose of this function is to ONLY validate any parameters that might not
   be valid for the current module to work and throw an error in case they do not match the right
   values.
