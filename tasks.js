@@ -32,6 +32,9 @@ module.exports = (resources) => {
       // ...
       // config.config1 = await bundled_config.config('CONFIG1')
       // ...
+      config.files = input.files
+      config.scanned = input.scanned_files
+      config.error = input.errored_files
       return config
     }
     
