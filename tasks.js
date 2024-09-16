@@ -53,6 +53,12 @@ module.exports = (resources) => {
 				if (!item) {
 					throw new Error("MissingInput: " + name);
 				}
+        if (!Array.isArray(item)) {
+          throw new Error(`InvalidType: ${name} should be an array`)
+        }
+        if (name === 'all files' && item.length === 0) {
+          throw new Error('MissingInput: Files array cannot be empty')
+        }
 			});
 			return config;
 		}
