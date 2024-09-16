@@ -3,6 +3,7 @@ module.exports = (resources) => {
 	const shared = {
 		// SHARED_VAR: value
 		// ...
+		STATUS_ERROR: "error",
 	};
 
 	// ============================================================================
@@ -13,15 +14,29 @@ module.exports = (resources) => {
 
 		try {
 			const data = await setup(await validate(await load(input)));
-			// business logic goes here...
-			// output = ...
+
+			const unscanned = data.files.filter(
+				(id) => !data.scanned.includes(id) && !data.error.includes(id)
+			);
+
+			output = {
+				unscanned_files: unscanned,
+			};
 		} catch (e) {
 			// if (e.message === ...
 			//   throw new Error('...
 			// }
 			// Default case
-			_debug(e.stack);
-			throw e;
+			if (e.message.startsWith("MissingInput")) {
+				_debug(e.stack);
+				throw new Error(`Missing Input Error: ${e.message}`);
+			} else {
+				_debug(e.stack);
+				output = {
+					status: shared.STATUS_ERROR,
+					message: e.message,
+				};
+			}
 		}
 
 		return output;
@@ -53,12 +68,12 @@ module.exports = (resources) => {
 				if (!item) {
 					throw new Error("MissingInput: " + name);
 				}
-        if (!Array.isArray(item)) {
-          throw new Error(`InvalidType: ${name} should be an array`)
-        }
-        if (name === 'all files' && item.length === 0) {
-          throw new Error('MissingInput: Files array cannot be empty')
-        }
+				if (!Array.isArray(item)) {
+					throw new Error(`InvalidType: ${name} should be an array`);
+				}
+				if (name === "all files" && item.length === 0) {
+					throw new Error("MissingInput: Files array cannot be empty");
+				}
 			});
 			return config;
 		}
