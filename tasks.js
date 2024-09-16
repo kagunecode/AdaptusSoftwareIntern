@@ -1,12 +1,8 @@
 module.exports = (resources) => {
 	const my = {};
 	const shared = {
-		// SHARED_VAR: value
-		// ...
 		STATUS_ERROR: "error",
 	};
-
-	// ============================================================================
 
 	my.run = async (input) => {
 		const { bundled_config, _debug } = resources;
@@ -23,10 +19,6 @@ module.exports = (resources) => {
 				unscanned_files: unscanned,
 			};
 		} catch (e) {
-			// if (e.message === ...
-			//   throw new Error('...
-			// }
-			// Default case
 			if (e.message.startsWith("MissingInput")) {
 				_debug(e.stack);
 				throw new Error(`Missing Input Error: ${e.message}`);
@@ -43,10 +35,6 @@ module.exports = (resources) => {
 
 		async function load(input = {}) {
 			const config = {};
-			// config.var1 = input.var1
-			// ...
-			// config.config1 = await bundled_config.config('CONFIG1')
-			// ...
 			config.files = input.files;
 			config.scanned = input.scanned_files;
 			config.error = input.errored_files;
@@ -55,7 +43,6 @@ module.exports = (resources) => {
 
 		async function setup(config) {
 			const data = { ...config };
-			// ...
 			return data;
 		}
 
